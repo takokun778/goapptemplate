@@ -37,6 +37,10 @@ tidy: ## go mod tidy
 mod: ## go modules list
 	@go list -u -m all
 
+.PHONY: vendor
+vendor: ## go mod vendor
+	@go mod vendor
+
 .PHONY: update
 update: ## go modules update
 	@go get -u -t ./...
@@ -59,9 +63,9 @@ e2e: ## e2e test
 
 define _e2e
 if [ -z "$1" ]; then \
-	go test ./e2e/... -tags e2e ; \
+	go test ./e2e/... ; \
 else \
-	go test ./e2e/... -tags e2e -count=1 ; \
+	go test ./e2e/... -count=1 ; \
 fi
 endef
 

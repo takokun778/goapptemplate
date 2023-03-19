@@ -1,4 +1,4 @@
-module github.com/takokun778/gotemplate
+module github.com/takokun778/goapptemplate
 
 go 1.19
 

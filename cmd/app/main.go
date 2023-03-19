@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/takokun778/gotemplate/pkg/log"
+	"github.com/takokun778/goapptemplate/pkg/log"
 )
 
 func main() {
