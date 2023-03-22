@@ -1,4 +1,4 @@
-package internal
+package e2e_test
 
 import (
 	"net/http"
@@ -29,6 +29,8 @@ func TestE2E(t *testing.T) {
 			if res.StatusCode != http.StatusOK {
 				t.Errorf("http.Get() status = %v", res.StatusCode)
 			}
+
+			defer res.Body.Close()
 		})
 	}
 }
