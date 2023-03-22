@@ -22,7 +22,7 @@ func TestE2E(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			res, err := http.Get(os.Getenv("E2E_ENDPOINT"))
+			res, err := http.Get(os.Getenv("E2E_ENDPOINT")) //nolint:noctx
 			if err != nil {
 				t.Errorf("http.Get() error = %v", err)
 			}
