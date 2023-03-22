@@ -10,12 +10,12 @@ name: ## display app name
 	@echo ${APP_NAME}
 
 .PHONY: aqua
-aqua: ## insatll aqua
-	@brew install aquaproj/aqua/aqua
+aqua: ## Put the path in your environment variables. ex) export PATH="${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin:$PATH"
+	@go run github.com/aquaproj/aqua-installer@latest --aqua-version v2.0.0
 
 .PHONY: tool
 tool: ## install tool
-	@aqua i
+	@aqua install
 
 .PHONY: compile
 compile: ## go compile
@@ -29,21 +29,16 @@ fmt: ## go format
 lint: ## go lint
 	@golangci-lint run --fix
 
-.PHONY: tidy
-tidy: ## go mod tidy
+.PHONY: renovate
+renovate: ## go modules update
+	@go get -u -t ./...
 	@go mod tidy
-
-.PHONY: mod
-mod: ## go modules list
-	@go list -u -m all
-
-.PHONY: vendor
-vendor: ## go mod vendor
 	@go mod vendor
 
-.PHONY: update
-update: ## go modules update
-	@go get -u -t ./...
+.PHONY: mod
+mod: ## go mod tidy & go mod vendor
+	@go mod tidy
+	@go mod vendor
 
 .PHONY: test
 test: ## unit test
@@ -69,17 +64,17 @@ else \
 fi
 endef
 
-.PHONY: up
+.PHONY: dev
 up: ## docker compose up with air hot reload
 	@docker compose --project-name ${APP_NAME} --file ./.docker/docker-compose.yaml up -d
 
 .PHONY: down
 down: ## docker compose down
-	@docker compose --project-name ${APP_NAME} down
+	@docker compose --project-name ${APP_NAME} down --volumes
 
-.PHONY: log
-log: ## docker log
-	@docker logs ${APP_NAME}-app
+.PHONY: balus
+balus: ## Destroy everything about docker. (containers, images, volumes, networks.)
+	@docker compose --project-name ${APP_NAME} down --rmi all --volumes
 
 .PHONY: ymlfmt
 ymlfmt: ## yaml file format
