@@ -18,11 +18,8 @@ jobs:
           go-version-file: go.mod
       - name: Go build
         run: go build ./...
-      - name: Setup aqua
-        uses: aquaproj/aqua-installer@v2.0.2
+      - name: Golangci-lint
+        uses: golangci/golangci-lint-action@v3
         with:
-          aqua_version: v2.2.1
-      - name: Install golangci-lint
-        run: ${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin/aqua install -t golangci-lint
-      - name: Golangci lint
-        run: golangci-lint run --fix
+          version: v1.50.1
+          args: --allow-parallel-runners
