@@ -1,6 +1,6 @@
 module github.com/takokun778/goapptemplate
 
-go 1.19
+go 1.20
 
 require (
 	github.com/google/uuid v1.3.0
